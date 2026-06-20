@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   detectSourceType,
+  docPathFromUrl,
   fetchWebPage,
   packageNameFromUrl,
   parseLibSpec,
@@ -14,6 +15,7 @@ import {
   resolveQueryPackage,
   resolveRemoveTarget,
   suggestPackageNameFromUrl,
+  urlMatchesPathPrefix,
 } from "./cli.js";
 import type { PackageInfo } from "./store.js";
 
@@ -777,5 +779,75 @@ describe("resolveQueryPackage", () => {
       },
     ];
     expect(resolveQueryPackage("cloudflare@1.0.0", withDomains)).toBeNull();
+  });
+});
+
+describe("urlMatchesPathPrefix", () => {
+  it("matches an exact path with and without trailing slash", () => {
+    expect(urlMatchesPathPrefix("https://example.com/docs", "/docs")).toBe(
+      true,
+    );
+    expect(urlMatchesPathPrefix("https://example.com/docs/", "/docs/")).toBe(
+      true,
+    );
+    expect(urlMatchesPathPrefix("https://example.com/docs", "/docs/")).toBe(
+      true,
+    );
+    expect(urlMatchesPathPrefix("https://example.com/docs/", "/docs")).toBe(
+      true,
+    );
+  });
+
+  it("matches URLs whose path is under the prefix", () => {
+    expect(urlMatchesPathPrefix("https://example.com/docs/foo", "/docs")).toBe(
+      true,
+    );
+    expect(
+      urlMatchesPathPrefix("https://example.com/docs/foo/bar", "/docs/"),
+    ).toBe(true);
+  });
+
+  it("rejects siblings with a similar but distinct prefix", () => {
+    expect(
+      urlMatchesPathPrefix("https://example.com/docs-other", "/docs"),
+    ).toBe(false);
+    expect(urlMatchesPathPrefix("https://example.com/blog", "/docs")).toBe(
+      false,
+    );
+  });
+
+  it("treats root prefix as match-all", () => {
+    expect(urlMatchesPathPrefix("https://example.com/anything", "/")).toBe(
+      true,
+    );
+    expect(urlMatchesPathPrefix("https://example.com/x/y", "/")).toBe(true);
+  });
+
+  it("returns false for malformed URLs", () => {
+    expect(urlMatchesPathPrefix("not a url", "/docs")).toBe(false);
+  });
+});
+
+describe("docPathFromUrl", () => {
+  it("appends .md to extensionless paths", () => {
+    expect(docPathFromUrl("https://example.com/docs/foo")).toBe(
+      "example.com/docs/foo.md",
+    );
+  });
+
+  it("strips trailing slash and defaults to /index for empty path", () => {
+    expect(docPathFromUrl("https://example.com/docs/")).toBe(
+      "example.com/docs.md",
+    );
+    expect(docPathFromUrl("https://example.com")).toBe("example.com/index.md");
+  });
+
+  it("preserves markdown-family extensions", () => {
+    expect(docPathFromUrl("https://example.com/api.md")).toBe(
+      "example.com/api.md",
+    );
+    expect(docPathFromUrl("https://example.com/api.mdx")).toBe(
+      "example.com/api.mdx",
+    );
   });
 });
