@@ -10,7 +10,7 @@ import { createPackageTempFile } from "./package-file.js";
 import { ensurePackagesDirectory } from "./staging.js";
 import type { PackageInfo } from "./store.js";
 
-const DATA_DIR = join(homedir(), ".context", "packages");
+const DATA_DIR = join(homedir(), ".libref", "packages");
 
 export interface SearchResultEntry {
   registry: string;

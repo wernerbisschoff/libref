@@ -506,7 +506,7 @@ describe("ContextServer HTTP transport", () => {
     expect(getDocsText).toContain("search_packages");
     expect(searchPackagesText).toContain("Use short package names like");
     expect(searchPackagesText).toContain("download_package");
-    expect(searchPackagesText).toContain("context add");
+    expect(searchPackagesText).toContain("libref add");
   });
 
   it("returns tool results via HTTP transport", async () => {

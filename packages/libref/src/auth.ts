@@ -3,7 +3,7 @@
  *
  * Many content platforms (Medium, Substack, etc.) gate content behind
  * login. Users with legitimate subscriptions can store cookies/auth
- * tokens per domain so that `context add <url>` can fetch authenticated
+ * tokens per domain so that `libref add <url>` can fetch authenticated
  * content automatically.
  */
 
@@ -26,7 +26,7 @@ export interface PlatformAuth {
 
 export type AuthConfig = Record<string, PlatformAuth>;
 
-const AUTH_PATH = join(homedir(), ".context", "auth.json");
+const AUTH_PATH = join(homedir(), ".libref", "auth.json");
 
 let authCache: AuthConfig | undefined;
 
@@ -53,7 +53,7 @@ export function loadAuth(): AuthConfig {
 
 /** Save auth config to disk. */
 export function saveAuth(auth: AuthConfig): void {
-  const dir = join(homedir(), ".context");
+  const dir = join(homedir(), ".libref");
   mkdirSync(dir, { recursive: true });
   chmodSync(dir, 0o700);
   writeFileSync(AUTH_PATH, JSON.stringify(auth, null, 2), { mode: 0o600 });
