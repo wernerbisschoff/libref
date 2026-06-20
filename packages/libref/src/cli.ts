@@ -53,6 +53,11 @@ import {
   type MarkdownFile,
 } from "./package-builder.js";
 import { copyPackageFile, createPackageTempFile } from "./package-file.js";
+import {
+  parseLibSpec,
+  parseRegistryPackage,
+  resolveQueryPackage,
+} from "./resolve-package.js";
 import { type SearchResult, search } from "./search.js";
 import { ContextServer } from "./server.js";
 import { ensurePackagesDirectory } from "./staging.js";
@@ -67,6 +72,9 @@ import {
   reloadPackages,
 } from "./store.js";
 import { watchDirectory } from "./watch.js";
+
+// Re-export parsing helpers for existing test and downstream imports.
+export { parseLibSpec, parseRegistryPackage, resolveQueryPackage };
 
 type SourceType = "file" | "url" | "git" | "local-dir" | "website";
 
@@ -557,15 +565,6 @@ function reportInstalled(pkg: {
     `Note: ${packageKey(preferred)} is also installed and stays the default for \`${pkg.name}\`.`,
   );
   console.log(`      Query this one as \`${packageKey(pkg)}\`.`);
-}
-
-/** Parse a `--libs` spec into name (optionally with @version). */
-// Uses lastIndexOf so scoped names like `@trpc/server@1.0.0` split correctly,
-// while a bare scoped name `@trpc/server` (leading `@` only) keeps its name.
-export function parseLibSpec(spec: string): { name: string; version?: string } {
-  const at = spec.lastIndexOf("@");
-  if (at <= 0) return { name: spec };
-  return { name: spec.slice(0, at), version: spec.slice(at + 1) };
 }
 
 /**
@@ -1277,14 +1276,17 @@ function formatSearchResult(result: SearchResult): string {
 program
   .command("query")
   .description("Query documentation from an installed package")
-  .argument("<library>", "Package name with version (e.g., nextjs@15.0)")
+  .argument(
+    "<library>",
+    'Package identifier: "nextjs@15.0", "nextjs", or "npm/nextjs@15.0"',
+  )
   .argument("<topic>", GET_DOCS_TOPIC_DESCRIPTION)
   .action((library: string, topic: string) => {
     const store = new PackageStore();
     loadPackages(store, DATA_DIR);
 
     const packages = store.list();
-    const pkg = store.get(library);
+    const pkg = resolveQueryPackage(library, packages);
 
     if (!pkg) {
       const available = packages.map(packageKey);
@@ -1315,38 +1317,6 @@ program
       db.close();
     }
   });
-
-/**
- * Parse a "registry/name[@version]" string (e.g., "npm/next",
- * "pip/django", "npm/next@16.1.7", "npm/@trpc/server@10.0.0").
- * Returns { registry, name, version? } or null if the format is invalid.
- */
-export function parseRegistryPackage(input: string): {
-  registry: string;
-  name: string;
-  version?: string;
-} | null {
-  // Handle scoped packages: npm/@scope/name → registry=npm, name=@scope/name
-  const firstSlash = input.indexOf("/");
-  if (firstSlash <= 0) return null;
-
-  const registry = input.slice(0, firstSlash);
-  let name = input.slice(firstSlash + 1);
-  if (!name) return null;
-
-  // Split off an optional trailing "@version". Use lastIndexOf so scoped
-  // package names like "@trpc/server" aren't mistaken for a version marker.
-  let version: string | undefined;
-  const atIdx = name.lastIndexOf("@");
-  if (atIdx > 0) {
-    const v = name.slice(atIdx + 1);
-    if (v) version = v;
-    name = name.slice(0, atIdx);
-  }
-  if (!name) return null;
-
-  return version ? { registry, name, version } : { registry, name };
-}
 
 program
   .command("browse")
