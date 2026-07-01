@@ -6,8 +6,8 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@wbisschoff13/libref"><img src="https://img.shields.io/npm/v/@wbisschoff13/libref.svg" alt="npm version"></a>
-  <a href="https://github.com/wbisschoff13/libref/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License"></a>
+<a href="https://www.npmjs.com/package/@wernerbisschoff/libref"><img src="https://img.shields.io/npm/v/@wernerbisschoff/libref.svg" alt="npm version"></a>
+<a href="https://github.com/wernerbisschoff/libref/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.0-blue.svg" alt="TypeScript"></a>
 </p>
 
@@ -32,7 +32,7 @@ Libref is an MCP server backed by a [community-driven package registry](registry
 **Install once. Configure once. Then just ask your AI.**
 
 <p align="center">
-  <img src="https://media.githubusercontent.com/media/wbisschoff13/libref/main/packages/libref/assets/ai-sdk-demo.gif" alt="Libref demo" width="800">
+<img src="https://media.githubusercontent.com/media/wernerbisschoff/libref/main/packages/libref/assets/ai-sdk-demo.gif" alt="Libref demo" width="800">
 </p>
 
 ---
@@ -42,7 +42,7 @@ Libref is an MCP server backed by a [community-driven package registry](registry
 ### 1. Install
 
 ```bash
-npm install -g @wbisschoff13/libref
+npm install -g @wernerbisschoff/libref
 ```
 
 ### 2. Connect to your AI agent
@@ -431,7 +431,7 @@ If no `llms.txt` is found, Libref falls back to fetching the page directly. HTML
 libref add https://overreacted.io/things-i-dont-know-as-of-2018/
 
 # Raw Markdown from GitHub
-libref add https://raw.githubusercontent.com/wbisschoff13/libref/main/README.md --name libref-readme
+libref add https://raw.githubusercontent.com/wernerbisschoff/libref/main/README.md --name libref-readme
 ```
 
 For subscriber-only content on platforms you have a paid account for, see [`libref auth`](#libref-auth) below.

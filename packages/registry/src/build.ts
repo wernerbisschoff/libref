@@ -1,7 +1,7 @@
 /**
  * Build documentation packages from registry definitions.
  *
- * Uses @wbisschoff13/libref functions directly (workspace dependency)
+ * Uses @wernerbisschoff/libref functions directly (workspace dependency)
  * to clone repos, read docs, and build SQLite packages.
  *
  * Supports both versioned (clone at specific tag) and unversioned
@@ -15,7 +15,7 @@ import {
   buildPackage,
   cloneRepository,
   readLocalDocsFiles,
-} from "@wbisschoff13/libref";
+} from "@wernerbisschoff/libref";
 import {
   constructTag,
   isGitVersionEntry,

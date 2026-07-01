@@ -1,16 +1,16 @@
 {
-  "name": "@wbisschoff13/libref",
+  "name": "@wernerbisschoff/libref",
   "version": "2.1.3",
-  "mcpName": "io.github.wbisschoff13/libref",
+  "mcpName": "io.github.wernerbisschoff/libref",
   "description": "Local library reference for AI agents. Always current.",
   "keywords": [],
-  "homepage": "https://github.com/wbisschoff13/libref",
+  "homepage": "https://github.com/wernerbisschoff/libref",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wbisschoff13/libref.git"
+    "url": "git+https://github.com/wernerbisschoff/libref.git"
   },
   "bugs": {
-    "url": "https://github.com/wbisschoff13/libref/issues"
+    "url": "https://github.com/wernerbisschoff/libref/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,7 +39,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "wbisschoff13",
+  "author": "wernerbisschoff",
   "license": "Apache-2.0",
   "dependencies": {
     "@inquirer/prompts": "^8.2.0",

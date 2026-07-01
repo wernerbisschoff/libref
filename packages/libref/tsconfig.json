@@ -5,8 +5,8 @@
     "module": "NodeNext",
     "baseUrl": ".",
     "paths": {
-      "@wbisschoff13/libref": ["src/index.js"],
-      "@wbisschoff13/libref/*": ["src/*"]
+      "@wernerbisschoff/libref": ["src/index.js"],
+      "@wernerbisschoff/libref/*": ["src/*"]
     },
     "noEmit": true
   },

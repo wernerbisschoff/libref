@@ -613,13 +613,13 @@ describe("resolveQueryPackage", () => {
         sectionCount: 0,
       },
     ];
-    expect(
-      resolveQueryPackage("cloudflare", withDomains)?.name,
-    ).toBe("developers.cloudflare.com");
+    expect(resolveQueryPackage("cloudflare", withDomains)?.name).toBe(
+      "developers.cloudflare.com",
+    );
     expect(resolveQueryPackage("mui", withDomains)?.name).toBe("mui.com");
-    expect(
-      resolveQueryPackage("cloudflare.com", withDomains)?.name,
-    ).toBe("developers.cloudflare.com");
+    expect(resolveQueryPackage("cloudflare.com", withDomains)?.name).toBe(
+      "developers.cloudflare.com",
+    );
   });
 
   it("prefers an exact name match over the domain fallback", () => {

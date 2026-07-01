@@ -359,7 +359,8 @@ Beta content.`,
   it("returns original file when no ## headings exist", () => {
     const file = {
       path: "readme.md",
-      content: "# Title\n\nJust a single section.\n\n### Subheading\n\nMore content.",
+      content:
+        "# Title\n\nJust a single section.\n\n### Subheading\n\nMore content.",
     };
     const result = splitMarkdownByHeadings(file);
     expect(result).toEqual([file]);

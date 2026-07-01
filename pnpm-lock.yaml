@@ -103,7 +103,7 @@ importers:
 
   packages/registry:
     dependencies:
-      '@wbisschoff13/libref':
+      '@wernerbisschoff/libref':
         specifier: workspace:*
         version: link:../libref
       commander:
