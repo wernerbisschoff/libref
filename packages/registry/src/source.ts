@@ -22,6 +22,9 @@ export function resolveBuildSource(
   if (isGitVersionEntry(entry)) {
     return { ...entry.source, ref: constructTag(entry.tag_pattern, version) };
   }
+  // The HTML index downloader substitutes {version} itself; pre-resolving the
+  // URL here leaves no placeholder and fails the build.
+  if (entry.source.type === "html-index") return entry.source;
   return {
     ...entry.source,
     url: resolveUrl(entry.source.url, version),

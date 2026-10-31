@@ -3,7 +3,7 @@ description: "systemd reference manuals: services, units, systemctl, journalctl,
 repository: https://github.com/systemd/systemd
 
 versions:
-  - versions: ["258"]
+  - versions: ["262"]
     source:
       type: html-index
       url: "https://www.freedesktop.org/software/systemd/man/{version}/"

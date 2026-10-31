@@ -155,11 +155,24 @@ describe("HTML index registry integration", () => {
     );
   });
 
+  it("leaves the {version} placeholder for the HTML downloader", async () => {
+    vi.mocked(downloadHtmlIndex).mockResolvedValue([
+      {
+        path: "systemd.service.html",
+        content: "<h1>systemd.service</h1><p>content</p>",
+      },
+    ]);
+    await buildFromDefinition(definition() as VersionedDefinition, "258", dir);
+    expect(vi.mocked(downloadHtmlIndex).mock.calls[0]?.[0]).toMatchObject({
+      url: "https://docs.example/man/{version}/",
+    });
+  });
+
   it("loads both shipped systemd definitions", async () => {
     const root = resolve(import.meta.dirname, "../../..", "registry/systemd");
     const manuals = loadDefinition(join(root, "systemd.yaml"));
     expect(await discoverVersions(manuals)).toEqual([
-      { name: "systemd", registry: "systemd", version: "258" },
+      { name: "systemd", registry: "systemd", version: "262" },
     ]);
     const guides = loadDefinition(join(root, "systemd-guides.yaml"));
     expect(guides.source).toMatchObject({
