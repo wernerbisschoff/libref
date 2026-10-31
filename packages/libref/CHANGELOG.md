@@ -1,5 +1,14 @@
 # @neuledge/context
 
+## 3.0.1
+
+### Patch Changes
+
+- [`11fc50b`](https://github.com/wernerbisschoff/libref/commit/11fc50b4624ff81a1ef5b9c3c29cf79208981599) Thanks [@wernerbisschoff](https://github.com/wernerbisschoff)! - `libref query` and the MCP `get_docs` tool now accept a bare package name (e.g. `opentofu`) in addition to `name@version`. A `registry/name[@version]` prefix is also accepted, so a spec copied from `libref install` works directly in `libref query`. As a final fallback for bare inputs, the second-level domain or full main domain (e.g. `cloudflare` or `cloudflare.com`) matches an installed site package like `developers.cloudflare.com` when no exact name is installed.
+
+- [`ddaf62d`](https://github.com/wernerbisschoff/libref/commit/ddaf62d539ab9037ad2380d709dc2f984919225d) Thanks [@wernerbisschoff](https://github.com/wernerbisschoff)! - - `libref list` now directs users to `libref add <source>` (URL, GitHub repo, website, or local .db file) instead of only mentioning a local .db file.
+  - `libref add --help` (and the `add` row in `libref --help`) now makes the website fallback chain explicit: any website URL works — libref auto-fetches `llms.txt`, then falls back to `sitemap.xml`. The MCP tool descriptions shown to agents (`search_packages`, `MISSING_PACKAGE_GUIDANCE`) say the same.
+
 ## 1.3.7
 
 ### Patch Changes

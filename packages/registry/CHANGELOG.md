@@ -1,5 +1,13 @@
 # @neuledge/registry
 
+## 0.0.33
+
+### Patch Changes
+
+- [`ae172a9`](https://github.com/wernerbisschoff/libref/commit/ae172a931da1506227a06f92398717cdcb1637ac) Thanks [@wernerbisschoff](https://github.com/wernerbisschoff)! - Update the pinned documentation definitions to Java 27, Python 3.15, and systemd 262. Fix HTML index builds: `resolveBuildSource` now leaves the `{version}` placeholder in the source URL so the HTML index downloader can substitute a release, instead of failing every versioned html-index build.
+- Updated dependencies [[`11fc50b`](https://github.com/wernerbisschoff/libref/commit/11fc50b4624ff81a1ef5b9c3c29cf79208981599), [`ddaf62d`](https://github.com/wernerbisschoff/libref/commit/ddaf62d539ab9037ad2380d709dc2f984919225d)]:
+  - @wernerbisschoff/libref@3.0.1
+
 ## 0.0.32
 
 ### Patch Changes

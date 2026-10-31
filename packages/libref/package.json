@@ -1,6 +1,6 @@
 {
   "name": "@wernerbisschoff/libref",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "mcpName": "io.github.wernerbisschoff/libref",
   "description": "Local library reference for AI agents. Always current.",
   "keywords": [],
