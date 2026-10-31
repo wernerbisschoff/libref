@@ -91,7 +91,7 @@ jobs:
     permissions:
       contents: read
       # `mcp-publisher login github-oidc` exchanges this job's OIDC token for
-      # publish rights on io.github.neuledge/*, so no registry secret is stored.
+      # publish rights on io.github.wernerbisschoff/*, so no registry secret is stored.
       id-token: write
 
     env:
@@ -108,7 +108,7 @@ jobs:
       - name: Check MCP Registry version
         id: check
         run: |
-          version=$(jq -r .version packages/context/package.json)
+          version=$(jq -r .version packages/libref/package.json)
           name=$(jq -r .name server.json)
           status=$(curl -s -o /dev/null -w '%{http_code}' \
             "https://registry.modelcontextprotocol.io/v0/servers/${name/\//%2F}/versions/$version")
@@ -142,10 +142,10 @@ jobs:
           VERSION: ${{ steps.check.outputs.version }}
         run: |
           for _ in $(seq 20); do
-            [ "$(npm view "@neuledge/context@$VERSION" version)" = "$VERSION" ] && exit 0
+            [ "$(npm view "@wernerbisschoff/libref@$VERSION" version)" = "$VERSION" ] && exit 0
             sleep 15
           done
-          echo "@neuledge/context@$VERSION is not on npm"
+          echo "@wernerbisschoff/libref@$VERSION is not on npm"
           exit 1
 
       - name: Publish server

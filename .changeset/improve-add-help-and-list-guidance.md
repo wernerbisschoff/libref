@@ -1,5 +1,5 @@
 ---
-"@wbisschoff13/libref": patch
+"@wernerbisschoff/libref": patch
 ---
 
 - `libref list` now directs users to `libref add <source>` (URL, GitHub repo, website, or local .db file) instead of only mentioning a local .db file.
