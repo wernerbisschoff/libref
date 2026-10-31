@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    { "repo": "neuledge/context" }
-  ],
+  "changelog": ["@changesets/changelog-github", { "repo": "neuledge/context" }],
   "commit": false,
   "fixed": [],
   "linked": [],

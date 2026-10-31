@@ -1,5 +1,5 @@
 {
-  "name": "@neuledge/context",
+  "name": "@wernerbisschoff/libref",
   "version": "1.3.7",
   "mcpName": "io.github.neuledge/context",
   "description": "Context management for Neuledge packages",
