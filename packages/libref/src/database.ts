@@ -42,7 +42,9 @@ export async function initDatabase(): Promise<void> {
   if (backend) return;
 
   try {
-    betterSqlite3Constructor = _require("better-sqlite3");
+    const BetterSqlite3 = _require("better-sqlite3");
+    new BetterSqlite3(":memory:").close();
+    betterSqlite3Constructor = BetterSqlite3;
     backend = "better-sqlite3";
   } catch {
     const sqlJs = await import("sql.js-fts5");

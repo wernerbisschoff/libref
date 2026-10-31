@@ -55,14 +55,14 @@ describe("serve package reload integration", () => {
       tmpdir(),
       `context-serve-home-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     );
-    packagesDir = join(testHome, ".context", "packages");
+    packagesDir = join(testHome, ".libref", "packages");
 
-    // The CLI's run-directly check matches argv[1] ending in "context", so run
-    // the TypeScript source through a symlink named "context" rather than
+    // The CLI's run-directly check matches argv[1] ending in "libref", so run
+    // the TypeScript source through a symlink named "libref" rather than
     // depending on a prebuilt dist/cli.js.
     const binDir = join(testHome, "bin");
     mkdirSync(binDir, { recursive: true });
-    symlinkSync(join(SRC_DIR, "cli.ts"), join(binDir, "context"));
+    symlinkSync(join(SRC_DIR, "cli.ts"), join(binDir, "libref"));
   });
 
   afterEach(async () => {
@@ -85,7 +85,7 @@ describe("serve package reload integration", () => {
 
     const transport = new StdioClientTransport({
       command: process.execPath,
-      args: ["--import", "tsx", join(testHome, "bin", "context"), "serve"],
+      args: ["--import", "tsx", join(testHome, "bin", "libref"), "serve"],
       // Node's `os.homedir()` reads `HOME` on POSIX but `USERPROFILE` on
       // Windows, so set both to redirect the package directory to the
       // per-test temp HOME on every platform.
@@ -96,7 +96,7 @@ describe("serve package reload integration", () => {
 
     await started.connect(transport);
 
-    // A fresh HOME starts with no `.context/packages`; `serve` must create it
+    // A fresh HOME starts with no `.libref/packages`; `serve` must create it
     // before the initial store scan and watcher setup.
     expect(existsSync(packagesDir)).toBe(true);
 
@@ -159,7 +159,7 @@ describe("serve package reload integration", () => {
 
     const transport = new StdioClientTransport({
       command: process.execPath,
-      args: ["--import", "tsx", join(testHome, "bin", "context"), "serve"],
+      args: ["--import", "tsx", join(testHome, "bin", "libref"), "serve"],
       env: { HOME: testHome, USERPROFILE: testHome },
       cwd: PKG_DIR,
       stderr: "pipe",

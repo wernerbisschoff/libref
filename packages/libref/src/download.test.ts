@@ -35,7 +35,7 @@ vi.mock("node:fs", async (importOriginal) => {
   return { ...fs, renameSync: vi.fn(fs.renameSync) };
 });
 
-const DATA_DIR = join(homedir(), ".context", "packages");
+const DATA_DIR = join(homedir(), ".libref", "packages");
 const PACKAGE_PATH = join(DATA_DIR, "test-lib@1.0.0.db");
 const OPTIONS = { name: "test-lib", version: "1.0.0" };
 const download = () =>
