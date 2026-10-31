@@ -66,10 +66,7 @@ describe("automatic ingestion revision", () => {
       "packages/libref/src/package-builder.ts",
       'import parser from "parser";\nimport { helper } from "./helper.js";\nexport function buildPackage() { return helper(parser); }\n',
     );
-    write(
-      "packages/libref/src/helper.ts",
-      "export const helper = (x) => x;\n",
-    );
+    write("packages/libref/src/helper.ts", "export const helper = (x) => x;\n");
     write("pnpm-lock.yaml", lock());
   });
   afterEach(() => rmSync(root, { recursive: true, force: true }));
@@ -108,10 +105,7 @@ describe("automatic ingestion revision", () => {
       "packages/libref/src/helper.ts",
       'export { helper } from "./nested.js";\n',
     );
-    write(
-      "packages/libref/src/nested.ts",
-      "export const helper = (x) => x;\n",
-    );
+    write("packages/libref/src/nested.ts", "export const helper = (x) => x;\n");
     const changed = revision();
     expect(changed.files).toContain("packages/libref/src/nested.ts");
     expect(changed.revision).not.toBe(original.revision);
