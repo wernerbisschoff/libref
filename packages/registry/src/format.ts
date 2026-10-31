@@ -1,4 +1,4 @@
-import type { BuildResult } from "@neuledge/context";
+import type { BuildResult } from "@wernerbisschoff/libref";
 
 /** Include skipped files so malformed documents are visible to operators. */
 export function formatBuilt(result: BuildResult): string {

@@ -1,4 +1,4 @@
-import type { BuildResult } from "@neuledge/context";
+import type { BuildResult } from "@wernerbisschoff/libref";
 import {
   buildFromDefinition,
   buildUnversioned,

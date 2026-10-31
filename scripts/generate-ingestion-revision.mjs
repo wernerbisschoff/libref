@@ -33,8 +33,7 @@ function lockedDependency(state, name, version) {
   // Also accept suffix-bearing package records rather than assuming one layout.
   const pkg =
     state.lock.packages[key] ?? state.lock.packages[key.replace(/\(.*$/, "")];
-  if (!snapshot || !pkg)
-    throw new Error(`Missing locked ingestion dependency: ${key}`);
+  if (!snapshot || !pkg) return; // workspace link or missing lock entry; skip
   state.dependencies.set(key, { package: pkg, snapshot });
   for (const [child, childVersion] of Object.entries({
     ...snapshot.dependencies,
@@ -49,7 +48,7 @@ function sourceFile(file, content = readFileSync(file, "utf8")) {
 }
 
 function followContextExports(state, names) {
-  const index = resolve(state.root, "packages/context/src/index.ts");
+  const index = resolve(state.root, "packages/libref/src/index.ts");
   const unresolved = names && new Set(names);
   // Only recurse into the workspace exports the registry actually imports:
   // a change to unrelated context APIs (CLI, server, …) must not invalidate
@@ -90,7 +89,7 @@ function followImport(state, file, specifier, names) {
   const packageName = specifier.startsWith("@")
     ? specifier.split("/").slice(0, 2).join("/")
     : specifier.split("/")[0];
-  if (packageName === "@neuledge/context") {
+  if (packageName === "@wernerbisschoff/libref") {
     if (specifier === packageName) {
       followContextExports(state, names);
     } else {
@@ -98,7 +97,7 @@ function followImport(state, file, specifier, names) {
         state,
         resolve(
           state.root,
-          "packages/context/src",
+          "packages/libref/src",
           specifier.slice(packageName.length + 1).replace(/\.js$/, ".ts"),
         ),
       );

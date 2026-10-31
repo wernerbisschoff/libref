@@ -1,7 +1,7 @@
 import { mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { parseDocument } from "@neuledge/context";
+import { parseDocument } from "@wernerbisschoff/libref";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { HtmlIndexSource } from "./definition.js";
 import { downloadHtmlIndex, resolveIndexUrl } from "./html-index.js";

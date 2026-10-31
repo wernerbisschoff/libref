@@ -7,7 +7,7 @@
  */
 
 import { readFileSync } from "node:fs";
-import { initDatabase, openDatabase } from "@neuledge/context";
+import { initDatabase, openDatabase } from "@wernerbisschoff/libref";
 import pRetry, { AbortError } from "p-retry";
 import type { Source } from "./definition.js";
 

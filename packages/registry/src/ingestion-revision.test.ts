@@ -36,7 +36,7 @@ describe("automatic ingestion revision", () => {
         "packages/registry": {
           devDependencies: { typescript: { version: "5.9" } },
         },
-        "packages/context": { dependencies: { parser: { version: "1.0" } } },
+        "packages/libref": { dependencies: { parser: { version: "1.0" } } },
       },
       packages: {
         "parser@1.0": { resolution: { integrity: "parser" } },
@@ -56,18 +56,18 @@ describe("automatic ingestion revision", () => {
     root = mkdtempSync(resolve(tmpdir(), "ingestion-revision-"));
     write(
       "packages/registry/src/build.ts",
-      'import { buildPackage } from "@neuledge/context";\n',
+      'import { buildPackage } from "@wernerbisschoff/libref";\n',
     );
     write(
-      "packages/context/src/index.ts",
+      "packages/libref/src/index.ts",
       'export { buildPackage } from "./package-builder.js";\nexport { server } from "./server.js";\n',
     );
     write(
-      "packages/context/src/package-builder.ts",
+      "packages/libref/src/package-builder.ts",
       'import parser from "parser";\nimport { helper } from "./helper.js";\nexport function buildPackage() { return helper(parser); }\n',
     );
     write(
-      "packages/context/src/helper.ts",
+      "packages/libref/src/helper.ts",
       "export const helper = (x) => x;\n",
     );
     write("pnpm-lock.yaml", lock());
@@ -76,18 +76,18 @@ describe("automatic ingestion revision", () => {
 
   it("follows helpers and workspace exports while ignoring unrelated files and line endings", () => {
     const original = revision();
-    expect(original.files).toContain("packages/context/src/helper.ts");
-    expect(original.files).not.toContain("packages/context/src/server.ts");
+    expect(original.files).toContain("packages/libref/src/helper.ts");
+    expect(original.files).not.toContain("packages/libref/src/server.ts");
     write("README.md", "unrelated documentation");
-    write("packages/context/src/helper.test.ts", "unrelated test");
-    write("packages/context/src/server.ts", "unrelated server");
+    write("packages/libref/src/helper.test.ts", "unrelated test");
+    write("packages/libref/src/server.ts", "unrelated server");
     write(
-      "packages/context/src/helper.ts",
+      "packages/libref/src/helper.ts",
       "export const helper = (x) => x;\r\n",
     );
     expect(revision().revision).toBe(original.revision);
     write(
-      "packages/context/src/helper.ts",
+      "packages/libref/src/helper.ts",
       "export const helper = (x) => x + 1;\n",
     );
     expect(revision().revision).not.toBe(original.revision);
@@ -105,15 +105,15 @@ describe("automatic ingestion revision", () => {
   it("discovers newly imported helpers without a manually maintained file list", () => {
     const original = revision();
     write(
-      "packages/context/src/helper.ts",
+      "packages/libref/src/helper.ts",
       'export { helper } from "./nested.js";\n',
     );
     write(
-      "packages/context/src/nested.ts",
+      "packages/libref/src/nested.ts",
       "export const helper = (x) => x;\n",
     );
     const changed = revision();
-    expect(changed.files).toContain("packages/context/src/nested.ts");
+    expect(changed.files).toContain("packages/libref/src/nested.ts");
     expect(changed.revision).not.toBe(original.revision);
   });
 
@@ -121,7 +121,7 @@ describe("automatic ingestion revision", () => {
     "follows peer-suffixed dependencies with suffixed package records: %s",
     (suffixedPackages) => {
       const data = JSON.parse(lock());
-      data.importers["packages/context"].dependencies.parser.version =
+      data.importers["packages/libref"].dependencies.parser.version =
         "1.0(peer@1.0)";
       for (const name of ["parser", "helper"]) {
         const key = `${name}@1.0`;
@@ -164,12 +164,12 @@ describe("automatic ingestion revision", () => {
         "packages/registry/src/source.ts",
         "packages/registry/src/html-index.ts",
         "packages/registry/src/zip.ts",
-        "packages/context/src/package-builder.ts",
-        "packages/context/src/build.ts",
-        "packages/context/src/html.ts",
+        "packages/libref/src/package-builder.ts",
+        "packages/libref/src/build.ts",
+        "packages/libref/src/html.ts",
       ]),
     );
-    expect(generated.files).not.toContain("packages/context/src/cli.ts");
+    expect(generated.files).not.toContain("packages/libref/src/cli.ts");
     for (const entry of ["src/fingerprint.ts", "dist/fingerprint.js"]) {
       const revision = execFileSync(
         process.execPath,

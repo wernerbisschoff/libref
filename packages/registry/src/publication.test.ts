@@ -12,7 +12,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import { initDatabase, openDatabase } from "@neuledge/context";
+import { initDatabase, openDatabase } from "@wernerbisschoff/libref";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { getHeadCommit } from "./build.js";
 import { getIngestionRevision } from "./fingerprint.js";
